@@ -1,0 +1,8 @@
+﻿<Window x:Class="InstrumentViewer.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://www.codeplex.com/prism"
+        Title="Instrument Viewer" Height="350" Width="525">
+    <ItemsControl Name="MainRegion" 
+                  prism:RegionManager.RegionName="MainRegion"/>
+</Window>
