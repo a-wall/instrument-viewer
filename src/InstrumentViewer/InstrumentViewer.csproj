@@ -119,6 +119,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Instrument\Instrument.csproj">
+      <Project>{2121ad35-85d0-4d57-9bca-d1db255d416b}</Project>
+      <Name>Instrument</Name>
+    </ProjectReference>
+    <ProjectReference Include="Instrument.Ui\Instrument.Ui.csproj">
+      <Project>{70befce6-3332-4e40-ad5d-dc6a05a31fc3}</Project>
+      <Name>Instrument.Ui</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
