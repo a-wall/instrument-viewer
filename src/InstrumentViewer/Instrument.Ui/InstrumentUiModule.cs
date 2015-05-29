@@ -15,7 +15,7 @@ namespace Instrument.Ui
 
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion("MainRegion", typeof(InstrumentGridView));
+            _regionManager.RegisterViewWithRegion("MainRegion", () => new InstrumentGridView());
         }
     }
 }
