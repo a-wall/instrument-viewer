@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Shared;
 
 namespace Instrument.Ui.ViewModels
 {
@@ -7,12 +8,6 @@ namespace Instrument.Ui.ViewModels
         private string _instrument;
         private PriceViewModel _price;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public InstrumentPriceViewModel()
         {
@@ -27,7 +22,7 @@ namespace Instrument.Ui.ViewModels
                 if (_instrument != value)
                 {
                     _instrument = value;
-                    OnPropertyChanged("Instrument");
+                    PropertyChanged.Raise(this, () => Instrument);
                 }
             }
         }
@@ -40,7 +35,7 @@ namespace Instrument.Ui.ViewModels
                 if (_price != value)
                 {
                     _price = value;
-                    OnPropertyChanged("Price");
+                    PropertyChanged.Raise(this, () => Price);
                 }
             }
         }

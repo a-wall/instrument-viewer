@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Shared;
 
 namespace Instrument.Ui.ViewModels
 {
@@ -7,12 +8,6 @@ namespace Instrument.Ui.ViewModels
     {
         private ObservableCollection<InstrumentPriceViewModel> _instrumentPrices;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public ObservableCollection<InstrumentPriceViewModel> InstrumentPrices
         {
@@ -22,7 +17,7 @@ namespace Instrument.Ui.ViewModels
                 if (_instrumentPrices != value)
                 {
                     _instrumentPrices = value;
-                    OnPropertyChanged("InstrumentPrices");
+                    PropertyChanged.Raise(this, () => InstrumentPrices);
                 }
             }
         }

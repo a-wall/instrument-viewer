@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Shared;
 
 namespace Instrument.Ui.ViewModels
 {
@@ -8,12 +9,6 @@ namespace Instrument.Ui.ViewModels
         private decimal _value;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public decimal Value
         {
             get { return _value; }
@@ -22,7 +17,7 @@ namespace Instrument.Ui.ViewModels
                 if (_value != value)
                 {
                     _value = value;
-                    OnPropertyChanged("Value");
+                    PropertyChanged.Raise(this, () => Value);
                 }
             }
         }
@@ -35,7 +30,7 @@ namespace Instrument.Ui.ViewModels
                 if (_change != value)
                 {
                     _change = value;
-                    OnPropertyChanged("Change");
+                    PropertyChanged.Raise(this, () => Change);
                 }
             }
         }
