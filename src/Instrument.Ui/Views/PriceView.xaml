@@ -3,18 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
              xmlns:viewModels="clr-namespace:Instrument.Ui.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PriceIncreasedBrush" Color="LightGreen" po:Freeze="True" />
+        <SolidColorBrush x:Key="PriceDecreasedBrush" Color="OrangeRed" po:Freeze="True"/>
+    </UserControl.Resources>
     <TextBlock Text="{Binding Value}">
         <TextBlock.Style>
             <Style TargetType="TextBlock">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Increased}">
-                        <Setter Property="Foreground" Value="Green"/>
+                        <Setter Property="Foreground" Value="{StaticResource PriceIncreasedBrush}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Decreased}">
-                        <Setter Property="Foreground" Value="Red"/>
+                        <Setter Property="Foreground" Value="{StaticResource PriceDecreasedBrush}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>

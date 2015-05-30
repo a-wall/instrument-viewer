@@ -21,7 +21,7 @@ namespace Instrument.Ui
 
         public void Initialize()
         {
-            var viewController = new InstrumentGridViewController(_instrumentPriceService, TimeSpan.FromMilliseconds(500), DispatcherScheduler.Current, new EventLoopScheduler());
+            var viewController = new InstrumentGridViewController(_instrumentPriceService, TimeSpan.FromMilliseconds(300), DispatcherScheduler.Current, new EventLoopScheduler());
             viewController.Initialize();
             _regionManager.RegisterViewWithRegion("MainRegion", () => new InstrumentGridView {DataContext = viewController.ViewModel});
         }
