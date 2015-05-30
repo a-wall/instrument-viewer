@@ -1,4 +1,6 @@
-﻿using Instrument.Services;
+﻿using System;
+using System.Reactive.Concurrency;
+using Instrument.Services;
 using Instrument.Ui.ViewControllers;
 using Instrument.Ui.Views;
 using Microsoft.Practices.Prism.Modularity;
@@ -19,7 +21,7 @@ namespace Instrument.Ui
 
         public void Initialize()
         {
-            var viewController = new InstrumentGridViewController(_instrumentPriceService);
+            var viewController = new InstrumentGridViewController(_instrumentPriceService, TimeSpan.FromMilliseconds(500), DispatcherScheduler.Current, new EventLoopScheduler());
             viewController.Initialize();
             _regionManager.RegisterViewWithRegion("MainRegion", () => new InstrumentGridView {DataContext = viewController.ViewModel});
         }

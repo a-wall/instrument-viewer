@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Instrument.Services;
 using Instrument.Ui.ViewModels;
@@ -7,14 +8,22 @@ using Shared;
 
 namespace Instrument.Ui.ViewControllers
 {
-    public class InstrumentGridViewController
+    public sealed class InstrumentGridViewController : IDisposable
     {
         private readonly IInstrumentPriceService _instrumentPriceService;
         private InstrumentGridViewModel _viewModel;
+        private readonly CompositeDisposable _disposable;
+        private readonly TimeSpan _conflateTimeSpan;
+        private readonly IScheduler _uiScheduler;
+        private readonly IScheduler _backgroundScheduler;
 
-        public InstrumentGridViewController(IInstrumentPriceService instrumentPriceService)
+        public InstrumentGridViewController(IInstrumentPriceService instrumentPriceService, TimeSpan conflateTimeSpan, IScheduler uiScheduler, IScheduler backgroundScheduler)
         {
             _instrumentPriceService = instrumentPriceService;
+            _conflateTimeSpan = conflateTimeSpan;
+            _uiScheduler = uiScheduler;
+            _backgroundScheduler = backgroundScheduler;
+            _disposable = new CompositeDisposable();
         }
 
         public InstrumentGridViewModel ViewModel
@@ -30,8 +39,9 @@ namespace Instrument.Ui.ViewControllers
             };
 
             _instrumentPriceService.ObserveInstrumentPrices()
-                                   .SubscribeOn(TaskPoolScheduler.Default)
-                                   .ObserveOnDispatcher()
+                                   .Conflate(_conflateTimeSpan, _backgroundScheduler)
+                                   .SubscribeOn(_backgroundScheduler)
+                                   .ObserveOn(_uiScheduler)
                                    .Subscribe(p =>
                                    {
                                        if (_viewModel.InstrumentPrices.Contains(p.Instrument))
@@ -42,20 +52,13 @@ namespace Instrument.Ui.ViewControllers
                                        {
                                            _viewModel.InstrumentPrices.Add(p.ToViewModel());
                                        }
-                                   });
-            //viewModel.InstrumentPrices.AddRange(new[]
-            //{
-            //    new InstrumentPriceViewModel
-            //    {
-            //        Instrument = "VOD.L",
-            //        Price = new PriceViewModel {Value = 100, Change = PriceChangeDirection.Increased}
-            //    },
-            //    new InstrumentPriceViewModel
-            //    {
-            //        Instrument = "BARC.L",
-            //        Price = new PriceViewModel {Value = 50, Change = PriceChangeDirection.Decreased}
-            //    }
-            //});
+                                   })
+                                   .AddToDisposable(_disposable);
+        }
+
+        public void Dispose()
+        {
+            _disposable.Dispose();
         }
     }
 }
