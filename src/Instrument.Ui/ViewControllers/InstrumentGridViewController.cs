@@ -39,41 +39,23 @@ namespace Instrument.Ui.ViewControllers
                 InstrumentPrices = new ObservableKeyedCollection<string, InstrumentPriceViewModel>(ip => ip.Instrument)
             };
 
-            // Here we update current and average prices separately. 
-            // We could combine both streams but it will make the code less readable
-
             _instrumentPriceService.ObserveInstrumentPrices()
                                    .GroupBy(p => p.Instrument)
-                                   .Select(gp => gp.Conflate(_conflateTimeSpan, _backgroundScheduler)) // we conflate every instrument separately
+                                   .Select(gp => gp.Scan(Enumerable.Empty<InstrumentPrice>(), (acum, price) => acum.StartWith(price).Take(5))
+                                                   .Conflate(_conflateTimeSpan, _backgroundScheduler)) // we conflate every instrument separately
                                    .Merge()
+                                   .Select(prices => prices.ToAggregatedInstrumentPrice())
                                    .SubscribeOn(_backgroundScheduler)
                                    .ObserveOn(_uiScheduler)
                                    .Subscribe(p =>
                                    {
                                        if (_viewModel.InstrumentPrices.Contains(p.Instrument))
                                        {
-                                           _viewModel.InstrumentPrices[p.Instrument].UpdateCurrentPrice(p);
+                                           _viewModel.InstrumentPrices[p.Instrument].Update(p);
                                        }
                                        else
                                        {
                                            _viewModel.InstrumentPrices.Add(p.ToViewModel());
-                                       }
-                                   })
-                                   .AddToDisposable(_disposable);
-
-            _instrumentPriceService.ObserveInstrumentPrices()
-                                   .GroupBy(p => p.Instrument)
-                                   .Select(gp => gp.Scan(Enumerable.Empty<decimal>(), (acum, price) => acum.StartWith(price.Price).Take(5))
-                                                   .Select(p => new InstrumentPrice(gp.Key, p.Average(x => x)))
-                                                   .Conflate(_conflateTimeSpan, _backgroundScheduler))
-                                   .Merge()
-                                   .SubscribeOn(_backgroundScheduler)
-                                   .ObserveOn(_uiScheduler)
-                                   .Subscribe(p =>
-                                   {
-                                       if (_viewModel.InstrumentPrices.Contains(p.Instrument))
-                                       {
-                                           _viewModel.InstrumentPrices[p.Instrument].UpdateAveragePrice(p);
                                        }
                                    })
                                    .AddToDisposable(_disposable);

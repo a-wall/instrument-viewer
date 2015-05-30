@@ -67,6 +67,7 @@ namespace InstrumentViewer.Tests.Instrument.Ui.ViewControllers
 
             // Then
             Assert.AreEqual(1, viewController.ViewModel.InstrumentPrices.Count);
+            Assert.AreEqual(103, viewController.ViewModel.InstrumentPrices[0].CurrentPrice.Value);
             Assert.AreEqual(102, viewController.ViewModel.InstrumentPrices[0].AveragePrice.Value);
         }
     }
