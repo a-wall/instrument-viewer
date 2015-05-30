@@ -2,8 +2,8 @@
 {
     public enum PriceChangeDirection
     {
-        Undefined,
-        Increase,
-        Decrease
+        Unchanged,
+        Increased,
+        Decreased
     }
 }

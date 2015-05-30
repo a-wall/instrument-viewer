@@ -10,10 +10,10 @@
         <TextBlock.Style>
             <Style TargetType="TextBlock">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Increase}">
+                    <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Increased}">
                         <Setter Property="Foreground" Value="Green"/>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Decrease}">
+                    <DataTrigger Binding="{Binding Change}" Value="{x:Static viewModels:PriceChangeDirection.Decreased}">
                         <Setter Property="Foreground" Value="Red"/>
                     </DataTrigger>
                 </Style.Triggers>

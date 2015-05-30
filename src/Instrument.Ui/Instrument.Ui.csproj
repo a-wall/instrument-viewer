@@ -55,6 +55,24 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading">
+      <HintPath>..\packages\Rx-XAML.2.2.5\lib\net40\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -69,10 +87,13 @@
   <ItemGroup>
     <Compile Include="InstrumentUiModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewControllers\InstrumentGridViewController.cs" />
     <Compile Include="ViewModels\InstrumentGridViewModel.cs" />
     <Compile Include="ViewModels\InstrumentPriceViewModel.cs" />
+    <Compile Include="ViewModels\InstrumentPriceViewModelExtensions.cs" />
     <Compile Include="ViewModels\PriceChangeDirection.cs" />
     <Compile Include="ViewModels\PriceViewModel.cs" />
+    <Compile Include="ViewModels\PriceViewModelExtensions.cs" />
     <Compile Include="Views\InstrumentGridView.xaml.cs">
       <DependentUpon>InstrumentGridView.xaml</DependentUpon>
     </Compile>
@@ -84,6 +105,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Instrument\Instrument.csproj">
+      <Project>{2121AD35-85D0-4D57-9BCA-D1DB255D416B}</Project>
+      <Name>Instrument</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{d99dfd64-52c1-4890-ac38-6f93757c3f4f}</Project>
       <Name>Shared</Name>
