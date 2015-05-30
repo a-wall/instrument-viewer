@@ -11,9 +11,9 @@ namespace Instrument.Services
         public InstrumentPriceService()
         {
             _prices = Observable.Generate(100, _ => true, i => i + _random.Next(-1, 2), i => new InstrumentPrice("VOD.L", i), _ => TimeSpan.FromMilliseconds(100))
-                             .Merge(Observable.Generate(70, _ => true, i => i + _random.Next(-1, 2), i => new InstrumentPrice("BT.L", i), _ => TimeSpan.FromMilliseconds(100)))
-                             .Publish()
-                             .RefCount();
+                                .Merge(Observable.Generate(70, _ => true, i => i + _random.Next(-1, 2), i => new InstrumentPrice("BT.L", i), _ => TimeSpan.FromMilliseconds(100)))
+                                .Publish()
+                                .RefCount();
         }
 
         public IObservable<InstrumentPrice> ObserveInstrumentPrices()

@@ -2,10 +2,14 @@
 {
     public static class InstrumentPriceViewModelExtensions
     {
-        public static void Update(this InstrumentPriceViewModel viewModel, InstrumentPrice price)
+        public static void UpdateCurrentPrice(this InstrumentPriceViewModel viewModel, InstrumentPrice price)
         {
             viewModel.CurrentPrice.Update(price.Price);
-            //viewModel.AveragePrice.Update(price.AveragePrice);
+        }
+
+        public static void UpdateAveragePrice(this InstrumentPriceViewModel viewModel, InstrumentPrice price)
+        {
+            viewModel.AveragePrice.Update(price.Price);
         }
 
         public static InstrumentPriceViewModel ToViewModel(this InstrumentPrice price)
@@ -17,10 +21,7 @@
                 {
                     Value = price.Price
                 },
-                AveragePrice = new PriceViewModel
-                {
-                    //Value = price.AveragePrice
-                }
+                AveragePrice = new PriceViewModel()
             };
         }
     }

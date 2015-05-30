@@ -49,7 +49,7 @@ namespace Instrument.Ui.ViewControllers
                                    {
                                        if (_viewModel.InstrumentPrices.Contains(p.Instrument))
                                        {
-                                           _viewModel.InstrumentPrices[p.Instrument].Update(p);
+                                           _viewModel.InstrumentPrices[p.Instrument].UpdateCurrentPrice(p);
                                        }
                                        else
                                        {
@@ -70,16 +70,10 @@ namespace Instrument.Ui.ViewControllers
                                    {
                                        if (_viewModel.InstrumentPrices.Contains(p.Instrument))
                                        {
-                                           //_viewModel.InstrumentPrices[p.Instrument].Update(p);
-                                           _viewModel.InstrumentPrices[p.Instrument].AveragePrice.Update(p.Price);
-                                       }
-                                       else
-                                       {
-                                           //_viewModel.InstrumentPrices.Add(p.ToViewModel());
+                                           _viewModel.InstrumentPrices[p.Instrument].UpdateAveragePrice(p);
                                        }
                                    })
                                    .AddToDisposable(_disposable);
-                                                   
         }
 
         public void Dispose()
