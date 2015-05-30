@@ -12,10 +12,17 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Instrument" Binding="{Binding Instrument}" />
-                <DataGridTemplateColumn Header="Price">
+                <DataGridTemplateColumn Header="Current Price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <views:PriceView DataContext="{Binding Price}"/>
+                            <views:PriceView DataContext="{Binding CurrentPrice}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Average Price">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <views:PriceView DataContext="{Binding AveragePrice}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -56,6 +57,29 @@ namespace Instrument.Ui.ViewControllers
                                        }
                                    })
                                    .AddToDisposable(_disposable);
+
+            _instrumentPriceService.ObserveInstrumentPrices()
+                                   .GroupBy(p => p.Instrument)
+                                   .Select(gp => gp.Buffer(5, 1)
+                                                   .Select(p => new InstrumentPrice(gp.Key, p.Average(x => x.Price)))
+                                                   .Conflate(_conflateTimeSpan, _backgroundScheduler))
+                                   .Merge()
+                                   .SubscribeOn(_backgroundScheduler)
+                                   .ObserveOn(_uiScheduler)
+                                   .Subscribe(p =>
+                                   {
+                                       if (_viewModel.InstrumentPrices.Contains(p.Instrument))
+                                       {
+                                           //_viewModel.InstrumentPrices[p.Instrument].Update(p);
+                                           _viewModel.InstrumentPrices[p.Instrument].AveragePrice.Update(p.Price);
+                                       }
+                                       else
+                                       {
+                                           //_viewModel.InstrumentPrices.Add(p.ToViewModel());
+                                       }
+                                   })
+                                   .AddToDisposable(_disposable);
+                                                   
         }
 
         public void Dispose()

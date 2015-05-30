@@ -6,12 +6,14 @@ namespace Instrument.Ui.ViewModels
     public class InstrumentPriceViewModel : INotifyPropertyChanged
     {
         private string _instrument;
-        private PriceViewModel _price;
+        private PriceViewModel _currentPrice;
+        private PriceViewModel _averagePrice;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public InstrumentPriceViewModel()
         {
-            _price = new PriceViewModel();
+            _currentPrice = new PriceViewModel();
+            _averagePrice = new PriceViewModel();
         }
 
         public string Instrument
@@ -27,15 +29,28 @@ namespace Instrument.Ui.ViewModels
             }
         }
 
-        public PriceViewModel Price
+        public PriceViewModel CurrentPrice
         {
-            get { return _price; }
+            get { return _currentPrice; }
             set
             {
-                if (_price != value)
+                if (_currentPrice != value)
                 {
-                    _price = value;
-                    PropertyChanged.Raise(this, () => Price);
+                    _currentPrice = value;
+                    PropertyChanged.Raise(this, () => CurrentPrice);
+                }
+            }
+        }
+
+        public PriceViewModel AveragePrice
+        {
+            get { return _averagePrice; }
+            set
+            {
+                if (_averagePrice != value)
+                {
+                    _averagePrice = value;
+                    PropertyChanged.Raise(this, () => AveragePrice);
                 }
             }
         }
