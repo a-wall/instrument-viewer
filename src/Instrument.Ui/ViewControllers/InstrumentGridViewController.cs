@@ -39,7 +39,9 @@ namespace Instrument.Ui.ViewControllers
             };
 
             _instrumentPriceService.ObserveInstrumentPrices()
-                                   .Conflate(_conflateTimeSpan, _backgroundScheduler)
+                                   .GroupBy(p => p.Instrument)
+                                   .Select(gp => gp.Conflate(_conflateTimeSpan, _backgroundScheduler)) // we conflate every instrument separately
+                                   .Merge()
                                    .SubscribeOn(_backgroundScheduler)
                                    .ObserveOn(_uiScheduler)
                                    .Subscribe(p =>
