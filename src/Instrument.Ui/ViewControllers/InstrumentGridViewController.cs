@@ -39,6 +39,9 @@ namespace Instrument.Ui.ViewControllers
                 InstrumentPrices = new ObservableKeyedCollection<string, InstrumentPriceViewModel>(ip => ip.Instrument)
             };
 
+            // Here we update current and average prices separately. 
+            // We could combine both streams but it will make the code less readable
+
             _instrumentPriceService.ObserveInstrumentPrices()
                                    .GroupBy(p => p.Instrument)
                                    .Select(gp => gp.Conflate(_conflateTimeSpan, _backgroundScheduler)) // we conflate every instrument separately
@@ -60,8 +63,8 @@ namespace Instrument.Ui.ViewControllers
 
             _instrumentPriceService.ObserveInstrumentPrices()
                                    .GroupBy(p => p.Instrument)
-                                   .Select(gp => gp.Buffer(5, 1)
-                                                   .Select(p => new InstrumentPrice(gp.Key, p.Average(x => x.Price)))
+                                   .Select(gp => gp.Scan(Enumerable.Empty<decimal>(), (acum, price) => acum.StartWith(price.Price).Take(5))
+                                                   .Select(p => new InstrumentPrice(gp.Key, p.Average(x => x)))
                                                    .Conflate(_conflateTimeSpan, _backgroundScheduler))
                                    .Merge()
                                    .SubscribeOn(_backgroundScheduler)
