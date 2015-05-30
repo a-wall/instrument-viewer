@@ -11,7 +11,7 @@
         <SolidColorBrush x:Key="PriceIncreasedBrush" Color="LightGreen" po:Freeze="True" />
         <SolidColorBrush x:Key="PriceDecreasedBrush" Color="OrangeRed" po:Freeze="True"/>
     </UserControl.Resources>
-    <TextBlock Text="{Binding Value}">
+    <TextBlock Text="{Binding Value, StringFormat='{}{0:#,#.00}'}">
         <TextBlock.Style>
             <Style TargetType="TextBlock">
                 <Style.Triggers>
