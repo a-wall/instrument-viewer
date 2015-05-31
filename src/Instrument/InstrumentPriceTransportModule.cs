@@ -30,7 +30,7 @@ namespace Instrument
             //                       .Publish()
             //                       .RefCount();
             //_container.RegisterInstance<IObservable<InstrumentPrice>>(prices);
-            
+
             var adapter = new InstrumentPriceStringAdapter();
             var fileName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath) + @"\Data\Sample Data.txt";
 

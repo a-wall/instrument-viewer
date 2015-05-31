@@ -8,7 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="m:MetroWindow" BasedOn="{StaticResource {x:Type m:MetroWindow}}">
+    <Style TargetType="{x:Type m:MetroWindow}" BasedOn="{StaticResource {x:Type m:MetroWindow}}">
         <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="WindowTransitionsEnabled" Value="False" />

@@ -14,7 +14,7 @@ namespace Instrument.FileSystem
 
         public string Adapt(InstrumentPrice value)
         {
-            throw new NotSupportedException();
+            return string.Format("{0}:{1}", value.Instrument, value.Price);
         }
     }
 }
