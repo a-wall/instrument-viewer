@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 
 namespace Instrument.FileSystem
 {
@@ -19,7 +21,8 @@ namespace Instrument.FileSystem
         public IObservable<T> Observe()
         {
             return Observable.Using(() => new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite),
-                                          fs => ReadLines(fs).ToObservable())
+                                          fs => ReadLines(fs).ToObservable(new EventLoopScheduler()))
+                             .Where(s => !string.IsNullOrEmpty(s))
                              .Select(s => _adapter(s));
         }
 
@@ -27,8 +30,14 @@ namespace Instrument.FileSystem
         {
             using (var sr = new StreamReader(stream))
             {
-                while (!sr.EndOfStream)
+                while (true)
+                {
+                    while (sr.EndOfStream)
+                    {
+                        Thread.Sleep(TimeSpan.FromMilliseconds(100));
+                    }
                     yield return sr.ReadLine();
+                }
             }
         }
     }
