@@ -24,6 +24,7 @@ namespace InstrumentViewer
         protected override void ConfigureModuleCatalog()
         {
             var moduleCatalog = new ModuleCatalog();
+            moduleCatalog.AddModule(typeof(BaseServicesModule));
             moduleCatalog.AddModule(typeof(InstrumentModule));
             moduleCatalog.AddModule(typeof(InstrumentUiModule));
 

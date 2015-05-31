@@ -31,7 +31,7 @@ namespace InstrumentViewer.Tests.Instrument.Ui.ViewControllers
                                   .Repeat.Any();
 
             // When
-            var viewController = new InstrumentGridViewController(instrumentPriceService, _conflateTimeSpan, ImmediateScheduler.Instance, testScheduler);
+            var viewController = new InstrumentGridViewController(instrumentPriceService, _conflateTimeSpan, _ => { }, ImmediateScheduler.Instance, testScheduler);
             viewController.Initialize();
             testScheduler.Start();
 
@@ -61,7 +61,7 @@ namespace InstrumentViewer.Tests.Instrument.Ui.ViewControllers
                                   .Repeat.Any();
 
             // When
-            var viewController = new InstrumentGridViewController(instrumentPriceService, _conflateTimeSpan, ImmediateScheduler.Instance, testScheduler);
+            var viewController = new InstrumentGridViewController(instrumentPriceService, _conflateTimeSpan, _ => { }, ImmediateScheduler.Instance, testScheduler);
             viewController.Initialize();
             testScheduler.Start();
 

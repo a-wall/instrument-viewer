@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using Shared;
 
 namespace Instrument.Ui.ViewModels
@@ -7,6 +8,8 @@ namespace Instrument.Ui.ViewModels
     {
         private ObservableKeyedCollection<string, InstrumentPriceViewModel> _instrumentPrices;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public ICommand ShowHistoricalPrices { get; set; }
 
         public ObservableKeyedCollection<string, InstrumentPriceViewModel> InstrumentPrices
         {

@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <DataGrid ItemsSource="{Binding InstrumentPrices}" 
+        <DataGrid x:Name ="InstrumentPricesGrid"
+                  ItemsSource="{Binding InstrumentPrices}" 
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
@@ -29,6 +30,11 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" 
+                              Command="{Binding ShowHistoricalPrices}" 
+                              CommandParameter="{Binding ElementName=InstrumentPricesGrid, Path=SelectedItem}" />
+            </DataGrid.InputBindings>
         </DataGrid>
     </Grid>
 </UserControl>
