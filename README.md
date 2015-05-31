@@ -1,7 +1,7 @@
 Instrument Price Viewer
 ================
 
-.NET WPF application demonstrating using reactive design patterns for achieving the great user experience.
+.NET WPF application demonstrating using the reactive design patterns for achieving the great user experience.
 
 The application contains the following views:
 * Instrument Price Grid
@@ -22,4 +22,8 @@ In addition to this, the application asynchronously writes to this file the rand
     moduleCatalog.AddModule(typeof(InstrumentPriceFileAppenderModule), InitializationMode.WhenAvailable);
  
 ### Startup
-To start the application set `InstrumentViewer` as a start-up project.
+* Restore nuget packages using the command-line batch
+```
+\tools\restore_nuget_packages.cmd
+```
+* To start the application set `InstrumentViewer` as a start project.
