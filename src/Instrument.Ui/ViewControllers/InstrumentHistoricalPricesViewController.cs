@@ -48,7 +48,7 @@ namespace Instrument.Ui.ViewControllers
                                    .Take(10)
                                    .SubscribeOn(_backgroundScheduler)
                                    .ObserveOn(_uiScheduler)
-                                   .Subscribe(p => _viewModel.Prices.Add(p.Price))
+                                   .Subscribe(p => _viewModel.Prices.Insert(0, p.Price)) // put recent prices on top
                                    .AddToDisposable(_disposable);
         }
 
