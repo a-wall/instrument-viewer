@@ -24,6 +24,8 @@ namespace Instrument.Ui
 
         public void Initialize()
         {
+            // We throttle the updates (300ms) to avoid extra load on the dispatcher
+            // There's no need to show every single price change on the client
             var viewController = new InstrumentGridViewController(_instrumentPriceService, TimeSpan.FromMilliseconds(300), ShowHistoricalPrices, DispatcherScheduler.Current, new EventLoopScheduler());
             viewController.Initialize();
             _regionManager.RegisterViewWithRegion("MainRegion", () => new InstrumentGridView {DataContext = viewController.ViewModel});
@@ -31,7 +33,8 @@ namespace Instrument.Ui
 
         private void ShowHistoricalPrices(string instrument)
         {
-            var historicalPricesViewController = new InstrumentHistoricalPricesViewController();
+            // We throttle the updates (300ms) to avoid extra load on the dispatcher
+            var historicalPricesViewController = new InstrumentHistoricalPricesViewController(_instrumentPriceService, TimeSpan.FromMilliseconds(300), DispatcherScheduler.Current, TaskPoolScheduler.Default);
             historicalPricesViewController.Initialize(instrument);
             var historicalPricesView = new InstrumentHistoricalPricesView();
             _dialogService.ShowDialog(historicalPricesView, historicalPricesViewController.ViewModel);

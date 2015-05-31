@@ -38,6 +38,14 @@ namespace Instrument.Services
             return _prices;
         }
 
+        public IObservable<InstrumentPrice> ObserveHistoricalPrices(string instrumentId)
+        {
+            // Here we know that the number of instruments will be small so .Where(...) is ok to use.
+            // If the number of instruments and the number of cached elements is large,
+            // the more sofisticated cache based on Dictionary should be used.
+            return _prices.Where(p => instrumentId.Equals(p.Instrument, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public void Dispose()
         {
             _disposable.Dispose();
