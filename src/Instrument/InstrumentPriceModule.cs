@@ -9,11 +9,11 @@ using Microsoft.Practices.Unity;
 
 namespace Instrument
 {
-    public class InstrumentModule : IModule
+    public class InstrumentPriceModule : IModule
     {
         private readonly IUnityContainer _container;
 
-        public InstrumentModule(IUnityContainer container)
+        public InstrumentPriceModule(IUnityContainer container)
         {
             _container = container;
         }

@@ -76,14 +76,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InstrumentModule.cs" />
+    <Compile Include="InstrumentPriceModule.cs" />
     <Compile Include="InstrumentPrice.cs" />
+    <Compile Include="InstrumentPriceTransportModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IInstrumentPriceService.cs" />
     <Compile Include="Services\InstrumentPriceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{D99DFD64-52C1-4890-AC38-6F93757C3F4F}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
