@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="IAdapter.cs" />
     <Compile Include="ObservableExtensions.cs" />
     <Compile Include="ObservableKeyedCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

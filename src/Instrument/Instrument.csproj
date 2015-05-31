@@ -76,6 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystem\InstrumentPriceStringAdapter.cs" />
+    <Compile Include="FileSystem\ObservableFileStreamReader.cs" />
     <Compile Include="InstrumentPriceModule.cs" />
     <Compile Include="InstrumentPrice.cs" />
     <Compile Include="InstrumentPriceTransportModule.cs" />
