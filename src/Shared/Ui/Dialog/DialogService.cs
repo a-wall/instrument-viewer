@@ -21,7 +21,9 @@ namespace Shared.Ui.Dialog
                 Owner = Application.Current.MainWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
-
+            
+            window.SetResourceReference(FrameworkElement.StyleProperty, "MetroWindow");
+            
             if (viewModel is IDialogAware)
             {
                 window.SetBinding(Window.TitleProperty, new Binding("Title") {Source = viewModel});
