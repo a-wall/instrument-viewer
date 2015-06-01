@@ -1,12 +1,12 @@
-﻿<m:MetroWindow x:Class="InstrumentViewer.Shell"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:prism="http://www.codeplex.com/prism"
-                      xmlns:m="http://metro.mahapps.com/winfx/xaml/controls"
-                      Title="Instrument Viewer" 
-                      WindowTransitionsEnabled="False"
-                      WindowStartupLocation="CenterScreen"
-                      Height="350" 
-                      Width="525">
+<m:MetroWindow x:Class="InstrumentViewer.Shell"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:prism="http://www.codeplex.com/prism"
+               xmlns:m="http://metro.mahapps.com/winfx/xaml/controls"
+               Title="Instrument Viewer" 
+               WindowStartupLocation="CenterScreen"
+               Height="350" 
+               Width="525"
+               Style="{StaticResource MetroWindow}">
     <ItemsControl prism:RegionManager.RegionName="MainRegion"/>
 </m:MetroWindow>
