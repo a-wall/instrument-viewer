@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reflection;
+using System.Windows;
 using Instrument.FileSystem;
 using Microsoft.Practices.Prism.Modularity;
+using Shared;
 
 namespace Instrument
 {

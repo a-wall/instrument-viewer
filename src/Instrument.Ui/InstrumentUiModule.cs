@@ -6,6 +6,10 @@ using Instrument.Ui.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Shared.Ui.Dialog;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Windows;
+using Shared;
 
 namespace Instrument.Ui
 {
