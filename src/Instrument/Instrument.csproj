@@ -79,9 +79,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem\InstrumentPriceStringAdapter.cs" />
-    <Compile Include="FileSystem\ObservableFileStreamReader.cs" />
-    <Compile Include="InstrumentPriceFileAppenderModule.cs" />
     <Compile Include="InstrumentPriceModule.cs" />
     <Compile Include="InstrumentPrice.cs" />
     <Compile Include="InstrumentPriceTransportModule.cs" />

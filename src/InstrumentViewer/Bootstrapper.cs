@@ -30,9 +30,6 @@ namespace InstrumentViewer
             moduleCatalog.AddModule(typeof(InstrumentPriceModule));
             moduleCatalog.AddModule(typeof(InstrumentUiModule));
 
-            // Remove it if you don't want new prices to be written to the file
-            moduleCatalog.AddModule(typeof(InstrumentPriceFileAppenderModule), InitializationMode.WhenAvailable);
-
             ModuleCatalog = moduleCatalog;
         }
 

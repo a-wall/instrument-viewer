@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Reactive.Linq;
-using System.Reflection;
-using System.Text;
-using Instrument.FileSystem;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
@@ -23,20 +16,17 @@ namespace Instrument
 
         public void Initialize()
         {
-            // Uncomment if you wish to test with randomly generated prices
-            //var random = new Random();
-            //var prices = Observable.Generate(100, _ => true, i => i + random.Next(-1, 2), i => new InstrumentPrice("VOD.L", i), _ => TimeSpan.FromMilliseconds(100))
-            //                       .Merge(Observable.Generate(70, _ => true, i => i + random.Next(-1, 2), i => new InstrumentPrice("BT.L", i), _ => TimeSpan.FromMilliseconds(100)))
-            //                       .Publish()
-            //                       .RefCount();
-            //_container.RegisterInstance<IObservable<InstrumentPrice>>(prices);
-
-            var adapter = new InstrumentPriceStringAdapter();
-            var fileName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath) + @"\Data\Sample Data.txt";
-
-            var fileStreamReader = new ObservableFileStreamReader<InstrumentPrice>(fileName, adapter.Adapt);
-
-            _container.RegisterInstance<IObservable<InstrumentPrice>>(fileStreamReader.Observe());
+            var random = new Random();
+            
+            var prices = Observable.Generate(95, _ => true, i => i + random.Next(-1, 2), i => new InstrumentPrice("VOD.L", i), _ => TimeSpan.FromMilliseconds(100))
+                                   .Merge(Observable.Generate(97, _ => true, i => i + random.Next(-1, 2), i => new InstrumentPrice("BT.L", i), _ => TimeSpan.FromMilliseconds(100)))
+                                   .Merge(Observable.Generate(1450.1M, _ => true, i => i + (decimal)random.Next(-1, 2) / 10, i => new InstrumentPrice("BP.L", i), _ => TimeSpan.FromMilliseconds(100)))
+                                   .Merge(Observable.Generate(12830.2M, _ => true, i => i + (decimal)random.Next(-1, 2) / 10, i => new InstrumentPrice("Dow", i), _ => TimeSpan.FromMilliseconds(100)))
+                                   .Merge(Observable.Generate(85.6M, _ => true, i => i + (decimal)random.Next(-1, 2) / 10, i => new InstrumentPrice("Oil", i), _ => TimeSpan.FromMilliseconds(100)))
+                                   .Publish()
+                                   .RefCount();
+            
+            _container.RegisterInstance<IObservable<InstrumentPrice>>(prices);
         }
     }
 }
