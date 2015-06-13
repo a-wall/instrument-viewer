@@ -13,14 +13,8 @@ The application contains the following views:
   * shows a snapshot of the last 10 prices for the selected stock
   * the logic can be easily changed to keep updating the recent prices in realtime, if needed 
 
-The prices are read automatically from the file
-```
-\bin\Debug\Data\Sample Data.txt
-```
-In addition to this, the application asynchronously writes to this file the randomly generated prices. If this is not the expected behaviour, please comment out loading of the module `InstrumentPriceFileAppenderModule` in `Bootstrapper.cs`:
+The instrument prices are randomly generated.
 
-    moduleCatalog.AddModule(typeof(InstrumentPriceFileAppenderModule), InitializationMode.WhenAvailable);
- 
 ### Startup
 * Restore nuget packages using the command-line batch
 ```
