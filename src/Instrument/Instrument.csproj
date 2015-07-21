@@ -83,6 +83,7 @@
     <Compile Include="InstrumentPrice.cs" />
     <Compile Include="InstrumentPriceTransportModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CachingInstrumentPriceService.cs" />
     <Compile Include="Services\IInstrumentPriceService.cs" />
     <Compile Include="Services\InstrumentPriceService.cs" />
   </ItemGroup>

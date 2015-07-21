@@ -20,7 +20,7 @@ namespace Instrument
 
         public void Initialize()
         {
-            _container.RegisterType<IInstrumentPriceService, InstrumentPriceService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IInstrumentPriceService, CachingInstrumentPriceService>(new ContainerControlledLifetimeManager());
         }
     }
 }
