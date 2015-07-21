@@ -19,7 +19,6 @@ namespace Shared
         private readonly Subject<TKey> _keys = new Subject<TKey>();
         private readonly CompositeDisposable _disposable;
         private bool _completed;
-        private bool _disposed;
         private Exception _error;
 
         public ObservableCache(IObservable<TSource> source, Func<TSource, TKey> keySelector, IScheduler scheduler, int historySize = 1)
@@ -58,6 +57,11 @@ namespace Shared
 
         private IObservable<TSource> GetObservable(TKey key)
         {
+            if (_disposable.IsDisposed)
+            {
+                throw new ObjectDisposedException("ObservableCache");
+            }
+            
             ISubject<TSource> value;
             if (_items.TryGetValue(key, out value))
             {
@@ -68,7 +72,7 @@ namespace Shared
             {
                 return Observable.Throw<TSource>(_error);
             }
-            if (_completed || _disposed)
+            if (_completed)
             {
                 return Observable.Empty<TSource>();
             }
@@ -80,7 +84,7 @@ namespace Shared
 
         private void Publish(TKey key, TSource value)
         {
-            if (_error != null || _completed || _disposed)
+            if (_error != null || _completed || _disposable.IsDisposed)
             {
                 return;
             }
@@ -120,7 +124,6 @@ namespace Shared
 
         public void Dispose()
         {
-            _disposed = true;
             _disposable.Dispose();
             _scheduler.Schedule(CompleteSubscribers);
         }
