@@ -13,11 +13,12 @@ namespace Instrument.Services
         private readonly ObservableCache<string, InstrumentPrice> _cache;
         private readonly CompositeDisposable _disposable;
 
-        public CachingInstrumentPriceService(IObservable<InstrumentPrice> prices)
+        public CachingInstrumentPriceService(IObservable<InstrumentPrice> prices, IScheduler scheduler, int historySize = 10)
         {
+            scheduler = scheduler ?? TaskPoolScheduler.Default;
             _disposable = new CompositeDisposable();
 
-            _cache = new ObservableCache<string, InstrumentPrice>(prices, p => p.Instrument, TaskPoolScheduler.Default, 10);
+            _cache = new ObservableCache<string, InstrumentPrice>(prices, p => p.Instrument, scheduler, historySize);
             _cache.Initialize();
             _disposable.Add(_cache);
         }

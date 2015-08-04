@@ -79,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstrumentPriceExtensions.cs" />
     <Compile Include="InstrumentPriceModule.cs" />
     <Compile Include="InstrumentPrice.cs" />
     <Compile Include="InstrumentPriceTransportModule.cs" />
