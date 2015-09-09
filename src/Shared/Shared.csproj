@@ -74,6 +74,7 @@
     <Compile Include="ObservableKeyedCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedExtensions.cs" />
+    <Compile Include="Subjects\AccumulatingReplaySubject.cs" />
     <Compile Include="Ui\Dialog\DialogService.cs" />
     <Compile Include="Ui\Dialog\IDialogAware.cs" />
   </ItemGroup>

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Shared.Subjects;
+using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Shared
 {
@@ -93,6 +95,11 @@ namespace Shared
 
                 return subscription;
             });
+        }
+
+        public static IConnectableObservable<T> Replay<T>(this IObservable<T> source, T seed, Func<T, T, T> accumulator)
+        {
+            return source.Multicast(new AccumulatingReplaySubject<T>(seed, accumulator));
         }
     }
 }
