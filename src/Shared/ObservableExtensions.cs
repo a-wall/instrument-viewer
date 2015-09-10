@@ -1,5 +1,6 @@
 ﻿using Shared.Subjects;
 using System;
+using System.Collections.Generic;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -99,7 +100,62 @@ namespace Shared
 
         public static IConnectableObservable<T> Replay<T>(this IObservable<T> source, T seed, Func<T, T, T> accumulator)
         {
+            if (source == null)
+                throw new ArgumentNullException("source");
             return source.Multicast(new AccumulatingReplaySubject<T>(seed, accumulator));
+        }
+
+        public static IObservable<T> RepeatAfter<T>(this IObservable<T> source, TimeSpan dueTime, IScheduler scheduler = null)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            return RepeatInfinite(source, dueTime, scheduler).Concat();
+        }
+
+        public static IObservable<T> RepeatAfter<T>(this IObservable<T> source, TimeSpan dueTime, int repeatCount, IScheduler scheduler = null)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            return RepeatFinite(source, _ => dueTime, repeatCount, scheduler).Concat();
+        }
+
+        public static IObservable<T> RetryAfter<T>(this IObservable<T> source, TimeSpan dueTime, IScheduler scheduler = null)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            return RepeatInfinite(source, dueTime, scheduler).Catch();
+        }
+
+        public static IObservable<T> RetryAfter<T>(this IObservable<T> source, TimeSpan dueTime, int retryCount, IScheduler scheduler = null)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            return RepeatFinite(source, _ => dueTime, retryCount, scheduler).Catch();
+        }
+
+        public static IObservable<T> RetryWithBackOff<T>(this IObservable<T> source, TimeSpan dueTime, int retryCount, IScheduler scheduler = null)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            return RepeatFinite(source, attempt => TimeSpan.FromTicks(dueTime.Ticks * attempt), retryCount, scheduler).Catch();
+        }
+
+        private static IEnumerable<IObservable<T>> RepeatInfinite<T>(this IObservable<T> source, TimeSpan dueTime, IScheduler scheduler)
+        {
+            yield return source;
+
+            while (true)
+                yield return source.DelaySubscription(dueTime, scheduler ?? DefaultScheduler.Instance);
+        }
+
+        private static IEnumerable<IObservable<T>> RepeatFinite<T>(this IObservable<T> source, Func<int, TimeSpan> dueTime, int retryCount, IScheduler scheduler)
+        {
+            yield return source;
+
+            for (int i = 1; i <= retryCount; i++)
+            {
+                yield return source.DelaySubscription(dueTime(i), scheduler ?? DefaultScheduler.Instance);
+            }
         }
     }
 }
